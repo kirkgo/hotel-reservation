@@ -33,6 +33,7 @@ public class Room implements IRoom {
 
     @Override
     public String toString(){
-        return String.format("Room Number: %s \nPrice: %s \nRoom Type: %s", getRoomNumber(), getRoomPrice(), getRoomPrice());
+        return String.format("Room Number: %s \nPrice: %s \nRoom Type: %s", getRoomNumber(), getRoomPrice(),
+                getRoomType());
     }
 }
