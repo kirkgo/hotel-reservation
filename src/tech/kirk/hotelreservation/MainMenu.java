@@ -7,8 +7,10 @@ import tech.kirk.hotelreservation.model.Reservation;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MainMenu {
@@ -23,21 +25,25 @@ public class MainMenu {
 
         while (running) {
             displayMainMenu();
-            int option = scanner.nextInt();
+            try {
+                int option = scanner.nextInt();
 
-            switch (option) {
-                case 1 -> findAndReserveRoom();
-                case 2 -> seeMyReservations();
-                case 3 -> createAccount();
-                case 4 -> AdminMenu.adminMenu();
-                case 5 -> {
-                    running = false;
-                    System.out.println("Exiting the application...");
+                switch (option) {
+                    case 1 -> findAndReserveRoom();
+                    case 2 -> seeMyReservations();
+                    case 3 -> createAccount();
+                    case 4 -> AdminMenu.adminMenu();
+                    case 5 -> {
+                        running = false;
+                        System.out.println("Exiting the application...");
+                    }
+                    default -> System.out.println("Invalid option. Please select the number between 1-5.");
                 }
-                default -> System.out.println("Invalid option. Please select the number between 1-5.");
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number between 1-5.");
+                scanner.nextLine();
             }
         }
-        scanner.close();
     }
 
     private static void displayMainMenu(){
@@ -51,13 +57,21 @@ public class MainMenu {
     }
 
     private static void findAndReserveRoom(){
-        System.out.println("Enter check-in date (dd/mm/yyyy): ");
-        String checkInDateString = scanner.nextLine();
-        LocalDate checkInDate = LocalDate.parse(checkInDateString, dateTimeFormatter);
+        LocalDate checkInDate;
+        LocalDate checkOutDate;
 
-        System.out.println("Enter check-out date (dd/mm/yyyy): ");
-        String checkOutDateString = scanner.nextLine();
-        LocalDate checkOutDate = LocalDate.parse(checkOutDateString, dateTimeFormatter);
+        try {
+            System.out.println("Enter check-in date (dd/mm/yyyy): ");
+            String checkInDateString = scanner.nextLine();
+            checkInDate = LocalDate.parse(checkInDateString, dateTimeFormatter);
+
+            System.out.println("Enter check-out date (dd/mm/yyyy): ");
+            String checkOutDateString = scanner.nextLine();
+            checkOutDate = LocalDate.parse(checkOutDateString, dateTimeFormatter);
+        } catch (DateTimeParseException e) {
+            System.out.println("Invalid date format. Please enter a valid date. Example: 24/6/2023.");
+            return;
+        }
 
         Collection<IRoom> availableRooms = hotelResource.findARoom(checkInDate, checkOutDate);
 

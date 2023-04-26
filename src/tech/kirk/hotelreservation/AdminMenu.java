@@ -59,24 +59,56 @@ public class AdminMenu {
         }
     }
 
-    private static void addRoom(){
-        System.out.println("Enter room number: ");
-        String roomNumber = scanner.nextLine();
+    private static void addRoom() {
+        boolean addingRoom = true;
+        while (addingRoom) {
+            System.out.println("Enter room number: ");
+            String roomNumber = scanner.nextLine();
 
-        System.out.println("Enter room price: ");
-        double roomPrice = scanner.nextDouble();
+            if (!isNumeric(roomNumber)) {
+                System.out.println("Invalid room number. Room number should only contain numbers.");
+                continue;
+            }
 
-        System.out.println("Enter room type (1 for Single bed, 2 for Double bed): ");
-        int roomType = scanner.nextInt();
-        scanner.nextLine();
+            System.out.println("Enter room price: ");
+            String roomPriceString = scanner.nextLine();
 
-        if(roomType == 1 || roomType == 2){
-            RoomType type = roomType == 1 ? RoomType.SINGLE : RoomType.DOUBLE;
-            IRoom room = new Room(roomNumber, roomPrice,type);
-            adminResource.addRoom(Collections.singletonList(room));
-            System.out.println("Room added successfully!");
-        } else {
-            System.out.println("Invalid room type.");
+            if (!isNumeric(roomPriceString)) {
+                System.out.println("Invalid room price. Enter a valid price. Example: 128.65.");
+                continue;
+            }
+
+            double roomPrice = Double.parseDouble(roomPriceString);
+
+            System.out.println("Enter room type (1 for Single bed, 2 for Double bed): ");
+            int roomType = scanner.nextInt();
+            scanner.nextLine();
+
+            if (roomType == 1 || roomType == 2) {
+                RoomType type = roomType == 1 ? RoomType.SINGLE : RoomType.DOUBLE;
+                IRoom room = new Room(roomNumber, roomPrice, type);
+                adminResource.addRoom(Collections.singletonList(room));
+                System.out.println("Room added successfully!");
+                addingRoom = false;
+            } else {
+                System.out.println("Invalid room type.");
+            }
         }
+    }
+
+    private static boolean isNumeric(String strNum) {
+        if(strNum == null) {
+            return false;
+        }
+        try {
+            double d = Double.parseDouble(strNum);
+        } catch (NumberFormatException e1) {
+            try {
+                int i = Integer.parseInt(strNum);
+            } catch (NumberFormatException e2) {
+                return false;
+            }
+        }
+        return true;
     }
 }
