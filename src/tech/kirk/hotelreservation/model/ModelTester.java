@@ -8,7 +8,7 @@ public class ModelTester {
         System.out.println("----Room----");
         System.out.println(singleRoom);
 
-        FreeRoom freeRoom = new FreeRoom("1212", 0.00, RoomType.DOUBLE);
+        FreeRoom freeRoom = new FreeRoom("1212", RoomType.DOUBLE);
         System.out.println("----Free Room----");
         System.out.println(freeRoom);
 

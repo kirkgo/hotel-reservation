@@ -47,7 +47,7 @@ public class AdminMenu {
         System.out.println("All Customers: ");
         for(Customer customer : adminResource.getAllCustomers()){
             System.out.println(customer);
-            System.out.println("---------------------");
+            System.out.println("------------------------------------------");
         }
     }
 
@@ -55,7 +55,7 @@ public class AdminMenu {
         System.out.println("All Rooms: ");
         for(IRoom room : adminResource.getAllRooms()){
             System.out.println(room);
-            System.out.println("---------------------");
+            System.out.println("------------------------------------------");
         }
     }
 

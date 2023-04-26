@@ -1,7 +1,7 @@
 package tech.kirk.hotelreservation.model;
 
 public class FreeRoom extends Room{
-    public FreeRoom(String roomNumber, Double price, RoomType roomType) {
+    public FreeRoom(String roomNumber, RoomType roomType) {
         super(roomNumber, 0.00, roomType);
     }
 

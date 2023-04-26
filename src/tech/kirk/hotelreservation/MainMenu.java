@@ -93,21 +93,23 @@ public class MainMenu {
         }
     }
 
-
-
     private static void seeMyReservations(){
         System.out.println("Enter your email: ");
         String email = scanner.nextLine();
 
-        Collection<Reservation> reservations = hotelResource.getCustomerReservations(email);
-        if(reservations == null || reservations.isEmpty()){
-            System.out.println("No reservations found for the given email.");
-        } else {
-            System.out.println("Your reservations: ");
-            for(Reservation reservation : reservations){
-                System.out.println(reservation);
-                System.out.println("---------------------");
+        try {
+            Collection<Reservation> reservations = hotelResource.getCustomerReservations(email);
+            if (reservations == null || reservations.isEmpty()) {
+                System.out.println("No reservations found for the given email.");
+            } else {
+                System.out.println("Your reservations: ");
+                for (Reservation reservation : reservations) {
+                    System.out.println(reservation);
+                    System.out.println("------------------------------------------");
+                }
             }
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
 

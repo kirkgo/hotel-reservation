@@ -45,7 +45,10 @@ public class ReservationService {
     public Collection<IRoom> findRooms(LocalDate checkInDate, LocalDate checkOutDate){
         List<IRoom> availableRooms = new ArrayList<>();
 
-        if(customerReservationMap.isEmpty()) {
+//        if(customerReservationMap.isEmpty()) {
+//            return new ArrayList<>(roomMap.values());
+//        }
+        if(checkInDate == null && checkOutDate == null) {
             return new ArrayList<>(roomMap.values());
         }
 
@@ -55,10 +58,10 @@ public class ReservationService {
             for(List<Reservation> reservations : customerReservationMap.values()){
                 for(Reservation reservation : reservations) {
                     if(reservation.getRoom().equals(room) &&
-                            (reservation.getCheckInDate().compareTo(checkInDate) <= 0 &&
+                            ((reservation.getCheckInDate().compareTo(checkInDate) <= 0 &&
                                     reservation.getCheckOutDate().compareTo(checkInDate) > 0) ||
                             (reservation.getCheckInDate().compareTo(checkOutDate) < 0 &&
-                                    reservation.getCheckOutDate().compareTo(checkOutDate) >= 0)) {
+                                    reservation.getCheckOutDate().compareTo(checkOutDate) >= 0))) {
                         isAvailable = false;
                         break;
                     }
