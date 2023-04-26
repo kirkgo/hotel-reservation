@@ -15,7 +15,7 @@ public class MainMenu {
     private static final HotelResource hotelResource = HotelResource.getInstance();
     private static final AdminResource adminResource = AdminResource.getInstance();
     private static final Scanner scanner = new Scanner(System.in);
-    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/mm/yyyy");
+    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public static void mainMenu() {
         Scanner scanner = new Scanner(System.in);
@@ -36,7 +36,7 @@ public class MainMenu {
                     createAccount();
                     break;
                 case 4:
-                    // Admin menu
+                    AdminMenu.adminMenu();
                     break;
                 case 5:
                     running = false;
@@ -88,12 +88,16 @@ public class MainMenu {
             if(room == null) {
                 System.out.println("Invalid room number.");
             } else {
-                Reservation reservation = hotelResource.bookARoom(email, room, checkInDate, checkOutDate);
-                if(reservation != null) {
-                    System.out.println("Reservation successful!");
-                    System.out.println(reservation);
-                } else {
-                    System.out.println("Error: unable to create reservation.");
+                try {
+                    Reservation reservation = hotelResource.bookARoom(email, room, checkInDate, checkOutDate);
+                    if (reservation != null) {
+                        System.out.println("Reservation successful!");
+                        System.out.println(reservation);
+                    } else {
+                        System.out.println("Error: unable to create reservation.");
+                    }
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Error: " + e.getMessage());
                 }
             }
         }
@@ -112,6 +116,7 @@ public class MainMenu {
             System.out.println("Your reservations: ");
             for(Reservation reservation : reservations){
                 System.out.println(reservation);
+                System.out.println("---------------------");
             }
         }
     }
