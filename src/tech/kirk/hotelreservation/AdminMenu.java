@@ -22,20 +22,14 @@ public class AdminMenu {
             scanner.nextLine();
 
             switch (option){
-                case 1:
-                    seeAllCustomers();
-                    break;
-                case 2:
-                    seeAllRooms();
-                    break;
-                case 3:
-                    addRoom();
-                    break;
-                case 4:
+                case 1 -> seeAllCustomers();
+                case 2 -> seeAllRooms();
+                case 3 -> addRoom();
+                case 4 -> {
                     running = false;
                     System.out.println("Returning to main menu...");
-                default:
-                    System.out.println("Invalid option. Please select the number between 1-4.");
+                }
+                default -> System.out.println("Invalid option. Please select the number between 1-4.");
             }
         }
     }

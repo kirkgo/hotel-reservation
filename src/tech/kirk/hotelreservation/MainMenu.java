@@ -26,25 +26,15 @@ public class MainMenu {
             int option = scanner.nextInt();
 
             switch (option) {
-                case 1:
-                    findAndReserveRoom();
-                    break;
-                case 2:
-                    seeMyReservations();
-                    break;
-                case 3:
-                    createAccount();
-                    break;
-                case 4:
-                    AdminMenu.adminMenu();
-                    break;
-                case 5:
+                case 1 -> findAndReserveRoom();
+                case 2 -> seeMyReservations();
+                case 3 -> createAccount();
+                case 4 -> AdminMenu.adminMenu();
+                case 5 -> {
                     running = false;
                     System.out.println("Exiting the application...");
-                    break;
-                default:
-                    System.out.println("Invalid option. Please select the number between 1-5.");
-
+                }
+                default -> System.out.println("Invalid option. Please select the number between 1-5.");
             }
         }
         scanner.close();
