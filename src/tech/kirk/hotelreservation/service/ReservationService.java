@@ -5,6 +5,7 @@ import tech.kirk.hotelreservation.model.IRoom;
 import tech.kirk.hotelreservation.model.Reservation;
 
 import java.sql.Array;
+import java.time.LocalDate;
 import java.util.*;
 
 public class ReservationService {
@@ -33,7 +34,7 @@ public class ReservationService {
         return roomMap.get(roomId);
     }
 
-    public Reservation reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate){
+    public Reservation reserveARoom(Customer customer, IRoom room, LocalDate checkInDate, LocalDate checkOutDate){
         Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate);
         List<Reservation> customerReservations = customerReservationMap.getOrDefault(customer, new ArrayList<>());
         customerReservations.add(reservation);
@@ -41,15 +42,15 @@ public class ReservationService {
         return reservation;
     }
 
-    public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate){
+    public Collection<IRoom> findRooms(LocalDate checkInDate, LocalDate checkOutDate){
         List<IRoom> availableRooms = new ArrayList<>();
+
+        if(customerReservationMap.isEmpty()) {
+            return new ArrayList<>(roomMap.values());
+        }
+
         for(IRoom room : roomMap.values()){
             boolean isAvailable = true;
-
-            if(customerReservationMap.isEmpty()) {
-                availableRooms.add(room);
-                continue;
-            }
 
             for(List<Reservation> reservations : customerReservationMap.values()){
                 for(Reservation reservation : reservations) {
