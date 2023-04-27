@@ -79,6 +79,13 @@ public class ReservationService {
         return customerReservationMap.getOrDefault(customer, Collections.emptyList());
     }
 
+    public Collection<IRoom> findRecommendedRooms(LocalDate checkInDate, LocalDate checkOutDate) {
+        LocalDate extendedCheckInDate = checkInDate.plusDays(7);
+        LocalDate extendedCheckOutDate = checkOutDate.plusDays(7);
+
+        return findRooms(extendedCheckInDate, extendedCheckOutDate);
+    }
+
     public void printAllReservation(){
         for(List<Reservation> reservations : customerReservationMap.values()) {
             for(Reservation reservation : reservations) {

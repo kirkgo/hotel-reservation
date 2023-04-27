@@ -77,6 +77,48 @@ public class MainMenu {
 
         if(availableRooms.isEmpty()) {
             System.out.println("No rooms available for the given dates.");
+
+            Collection<IRoom> recommendedRooms = hotelResource.findRecommendedRooms(checkInDate, checkOutDate);
+
+            if(recommendedRooms.isEmpty()){
+                System.out.println("No recommended rooms found within the next 7 days.");
+            } else {
+                System.out.println("Recommended rooms for alternative dates (within the next 7 days): ");
+                for (IRoom room : recommendedRooms){
+                    System.out.println(room);
+                    System.out.println("------------------------------------------");
+                }
+
+                boolean bookingRecommendedRoom = false;
+                while (true) {
+                    System.out.println("Would you like to book a recommended room? (yes/no): ");
+                    String response = scanner.nextLine().trim().toLowerCase();
+
+                    if(response.equals("yes")) {
+                        bookingRecommendedRoom = true;
+                        break;
+                    } else if (response.equals("no")) {
+                        break;
+                    } else {
+                        System.out.println("Invalid input. Please enter 'yes' or 'no'.");
+                    }
+                }
+                if(bookingRecommendedRoom){
+                    System.out.println("Enter the room number of the recommended room you would like to book: ");
+                    String roomNumber = scanner.nextLine().trim();
+
+                    IRoom recommendedRoom = hotelResource.getRoom(roomNumber);
+                    if(recommendedRoom != null && recommendedRooms.contains(recommendedRoom)) {
+                        System.out.println("Enter your email: eg. name@domain.com");
+                        String customerEmail = scanner.nextLine();
+                        Reservation reservation = hotelResource.bookARoom(customerEmail, recommendedRoom, checkInDate.plusDays(7), checkOutDate.plusDays(7));
+                        System.out.println("Reservation completed: ");
+                        System.out.println(reservation);
+                    } else {
+                        System.out.println("Invalid room number. Returning to the main menu.");
+                    }
+                }
+            }
         } else {
             System.out.println("Available Rooms: ");
             for(IRoom room : availableRooms) {
