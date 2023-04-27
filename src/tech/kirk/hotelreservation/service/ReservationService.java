@@ -45,9 +45,6 @@ public class ReservationService {
     public Collection<IRoom> findRooms(LocalDate checkInDate, LocalDate checkOutDate){
         List<IRoom> availableRooms = new ArrayList<>();
 
-//        if(customerReservationMap.isEmpty()) {
-//            return new ArrayList<>(roomMap.values());
-//        }
         if(checkInDate == null && checkOutDate == null) {
             return new ArrayList<>(roomMap.values());
         }

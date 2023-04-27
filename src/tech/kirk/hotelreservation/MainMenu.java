@@ -82,7 +82,7 @@ public class MainMenu {
             for(IRoom room : availableRooms) {
                 System.out.println(room);
             }
-            System.out.println("Enter your email: ");
+            System.out.println("Enter your email: eg. name@domain.com");
             String email = scanner.nextLine();
 
             System.out.println("Enter the room number you'd like to reserve: ");
@@ -92,23 +92,27 @@ public class MainMenu {
             if(room == null) {
                 System.out.println("Invalid room number.");
             } else {
-                try {
-                    Reservation reservation = hotelResource.bookARoom(email, room, checkInDate, checkOutDate);
-                    if (reservation != null) {
-                        System.out.println("Reservation successful!");
-                        System.out.println(reservation);
-                    } else {
-                        System.out.println("Error: unable to create reservation.");
+                if (availableRooms.contains(room)) {
+                    try {
+                        Reservation reservation = hotelResource.bookARoom(email, room, checkInDate, checkOutDate);
+                        if (reservation != null) {
+                            System.out.println("Reservation successful!");
+                            System.out.println(reservation);
+                        } else {
+                            System.out.println("Error: unable to create reservation.");
+                        }
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Error: " + e.getMessage());
                     }
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Error: " + e.getMessage());
+                } else {
+                    System.out.println("The selected room is not available for the given dates.");
                 }
             }
         }
     }
 
     private static void seeMyReservations(){
-        System.out.println("Enter your email: ");
+        System.out.println("Enter your email: eg. name@domain.com");
         String email = scanner.nextLine();
 
         try {
@@ -134,7 +138,7 @@ public class MainMenu {
         System.out.println("Enter your last name: ");
         String lastName = scanner.nextLine();
 
-        System.out.println("Enter your email: ");
+        System.out.println("Enter your email: eg. name@domain.com");
         String email = scanner.nextLine();
 
         try {
