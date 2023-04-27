@@ -24,12 +24,13 @@ public class AdminMenu {
             switch (option){
                 case 1 -> seeAllCustomers();
                 case 2 -> seeAllRooms();
-                case 3 -> addRoom();
-                case 4 -> {
+                case 3 -> seeAllReservations();
+                case 4 -> addRoom();
+                case 5 -> {
                     running = false;
                     System.out.println("Returning to main menu...");
                 }
-                default -> System.out.println("Invalid option. Please select the number between 1-4.");
+                default -> System.out.println("Invalid option. Please select the number between 1-5.");
             }
         }
     }
@@ -38,9 +39,10 @@ public class AdminMenu {
         System.out.println("\nAdmin Menu: ");
         System.out.println("1. See All Customers");
         System.out.println("2. See All Rooms");
-        System.out.println("3. Add a Room");
-        System.out.println("4. Back to Main Menu");
-        System.out.println("Please select an option between 1-4: ");
+        System.out.println("3. See All Reservations");
+        System.out.println("4. Add a Room");
+        System.out.println("5. Back to Main Menu");
+        System.out.println("Please select an option between 1-5: ");
     }
 
     private static void seeAllCustomers(){
@@ -57,6 +59,11 @@ public class AdminMenu {
             System.out.println(room);
             System.out.println("------------------------------------------");
         }
+    }
+
+    private static void seeAllReservations(){
+        System.out.println("\nAll Reservations: ");
+        adminResource.displayAllReservations();
     }
 
     private static void addRoom() {

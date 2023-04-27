@@ -85,6 +85,7 @@ public class ReservationService {
     public void printAllReservation(){
         for(List<Reservation> reservations : customerReservationMap.values()) {
             for(Reservation reservation : reservations) {
+                System.out.println("------------------------------------------");
                 System.out.println(reservation);
             }
         }
